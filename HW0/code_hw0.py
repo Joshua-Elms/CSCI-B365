@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from math import sqrt
 
 def q1_1(teach_path: str) -> pd.DataFrame:
     """
@@ -82,20 +83,78 @@ def q2_3(df: pd.DataFrame):
     ax.grid(which="major", axis="both", **{"color": "xkcd:grey", "lw": .5})
     ax.set_axisbelow(True)
     plt.show()
+    pass
 
 
-if __name__=="__main__":
+def dist_Euclidean(points: tuple|list) -> tuple: 
+    """
+    Uses Euclidean distance formula to determine which to points on a list 
+    (ex. [(1,1), (2, 2), (4, 4)]) are least dissimilar.
+
+    Args: 
+        points: Any iterable containing at least 2 objects which can be interpreted 
+        as points, values can be int|float
+
+    Returns:
+        results: 2 points from input that are closest via Euclidean distance and 
+        their distance, ex. ((1,1), (2,2), 1.414)
+    """
+    ### Inline def of distance equation ###
+    euc_dist_eq = lambda x1, y1, x2, y2: sqrt(abs(x2 - x1)**2 + abs(y2 - y1)**2)
+
+    ### Create minkowski matrix ###
+    dist_list = [[] for i in range(len(points))]
+    for i, p1 in enumerate(points): # will append dist to row and column of list
+        for p2 in points:
+            dist_list[i].append(euc_dist_eq(p1[0], p1[1], p2[0], p2[1]))
+
+    ### Pretty Print Matrix ###
+    # dist_matrix = np.asarray(dist_list)
+    # print(np.array_str(dist_matrix, precision=2, suppress_small=True))
+    
+    ### Search for smallest distance, get location and value ###
+    length = len(points)
+    min = dist_list[0][1]
+    loc = (0,1)
+    for i in range(length-1):
+        for j in range(i+1, length):
+            if dist_list[i][j] < min:
+                min = dist_list[i][j]
+                loc = (i,j)
+
+    return (points[i], points[j], min)
+
+
+def main():
+    ### Problem 1 ###
     # path1 = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/HW0/Resources/teach.txt"
     # df0 = q1_1(path1)
     # ratio_vals = q1_2(df0)
     # filtered_df = q1_3(df0)
     # q1_4(df0)
+    ##################
 
-    path2 = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/HW0/Resources/mydata.txt"
-    df1 = q1_1(path2)
+    ### Problem 2 ###
+    # path2 = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/HW0/Resources/mydata.txt"
+    # df1 = q1_1(path2)
     # V2_attrs = q2_2(df1)
     # print(f"Mean: {V2_attrs[0]} \nMedian: {V2_attrs[1]}")
     # V1_attrs = q2_2(df1)
     # print(f"Variance: {V1_attrs[0]} \nStandard Deviation: {V1_attrs[1]}")
-    q2_3(df1)
+    # q2_3(df1)
+    ##################
+
+    ### Problem 3 ###
+    # lst1 = [(1,2), (3,4), (6,4)]
+    # lst2 = [(1,1), (2,5), (3,3)]
+    # lst3 = [(5,5), (10,10), (20,20)]
+    # print(dist_Euclidean(lst1))
+    #################
+
+    
+
+    pass
+
+if __name__=="__main__":
+    main()
 
