@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sqrt
+from statistics import variance
 
 def q1_1(teach_path: str) -> pd.DataFrame:
     """
@@ -125,6 +126,24 @@ def dist_Euclidean(points: tuple|list) -> tuple:
     return (points[i], points[j], min)
 
 
+def sample_mean(sample: list|tuple) -> float: 
+    """
+    Calculates the arithmetic mean of given sample
+    """
+    return sum(sample)/len(sample)
+
+
+def sample_variance(sample: list|tuple) -> float:
+    """
+    Calls sample_mean() to calculate the sample variance of a given sample
+    """
+    s_mean = sample_mean(sample)
+    n = len(sample)
+    variance = sum(((i - s_mean)**2 for i in sample))/(n-1)
+
+    return variance
+
+
 def main():
     ### Problem 1 ###
     # path1 = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/HW0/Resources/teach.txt"
@@ -144,16 +163,23 @@ def main():
     # q2_3(df1)
     ##################
 
-    ### Problem 3 ###
+    ## Problem 3 ###
     # lst1 = [(1,2), (3,4), (6,4)]
     # lst2 = [(1,1), (2,5), (3,3)]
     # lst3 = [(5,5), (10,10), (20,20)]
     # print(dist_Euclidean(lst1))
+    ################
+
+    ### Problem 4 ###
+    # sample1 = (15, 2, 44, 21, 40, 20, 19, 18)
+    # mean = sample_mean(sample1)
+    # var = sample_variance(sample1)
+    # print(f"Sample: {sample1}")
+    # print(f"Mean: {mean}")
+    # print(f"Sample Variance: {var}")
     #################
-
-    
-
     pass
+
 
 if __name__=="__main__":
     main()
