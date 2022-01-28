@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sqrt
-from statistics import variance
 
 def q1_1(teach_path: str) -> pd.DataFrame:
     """
