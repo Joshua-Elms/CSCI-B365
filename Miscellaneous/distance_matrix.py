@@ -1,19 +1,23 @@
 import numpy as np
-from sklearn.metrics import DistanceMetric
+from numpy.core.multiarray import asarray
+from sklearn.metrics import pairwise_distances
 
 
-def get_minkowski_distance(p1: tuple, p2: tuple, r: int) -> float:
+def get_minkowski_distance(p1: tuple, p2: tuple, r: int = 2) -> float:
     """
     Generates Minkowski Distance between two points, r is... dimensionality?
     """
-    x1, y1 = p1
-    x2, y2 = p2
 
     if isinstance(r, str):
         if r.lower() == "inf" or r.lower() == "infinity":
             r = 100
 
-    return (abs(x2 - x1)**r + abs(y2 - y1)**r)**(1/r)
+    cols = len(p1) 
+    tmp = 0
+    for i in range(cols):
+        tmp += (abs(p1[i] - p2[i])**r)
+
+    return tmp**(1/r)
 
 
 def create_minkowski_matrix(tpl1: tuple, tpl2: tuple, r: int|str) -> np.ndarray:
@@ -34,8 +38,13 @@ if __name__=="__main__":
     # tpl2 = tuple(np.random.randint(0, 10, 10))
     tpl1 = (0, 2, 3, 5)
     tpl2 = (2, 0, 1, 1)
-    r = 1
-    distance_matrix = create_minkowski_matrix(tpl1, tpl2, r)
+    arr1 = asarray(tpl1).reshape(1, -1)
+    arr2 = asarray(tpl2).reshape(1, -1)
 
-    print(distance_matrix)
-
+    zip1 = zip(tpl1, tpl2)
+    r = 2
+    # distance_matrix = create_minkowski_matrix(tpl1, tpl2, r)
+    # print(arr1)
+    print(pairwise_distances(arr1, arr2, metric="euclidean"))
+    # print(distance_matrix)
+    print(get_minkowski_distance(tpl1, tpl2))
