@@ -1,0 +1,2 @@
+import sys
+sys.path.insert(0, "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/Miscellaneous")

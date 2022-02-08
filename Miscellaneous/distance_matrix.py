@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics import DistanceMetric
 
 
 def get_minkowski_distance(p1: tuple, p2: tuple, r: int) -> float:

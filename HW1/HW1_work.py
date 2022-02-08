@@ -1,7 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sqrt
+import sys
+sys.path.insert(0, "/Users/joshuaelms/Desktop/github_repos/CSCI-B365_repo/CSCI-B365/Miscellaneous")
+import homemade_stats as hstat
 
 def data():
     df = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases\
@@ -10,49 +12,6 @@ def data():
     df.index += 1
     return df
 
-def cov(x: list|tuple, y: list|tuple, r: int = 9) -> float: 
-    """
-    Calculate sample covariance matrix for vectors x and y (must be same length)
-    r is the desired numbers of digits after decimal to round to
-    """
-    try: 
-        N = max(len(x), len(y))
-        x_mean = sum(x) / N
-        y_mean = sum(y) / N
-        cov = sum([(x[i] - x_mean) * (y[i] - y_mean) for i in range(N)]) / (N - 1)
-        return round(cov, r)
-
-    except IndexError: 
-        raise ValueError("Vectors must be of same length")
-
-    except TypeError:
-        raise TypeError("Vectors must only contain ints or floats")
-
-
-def corr(x: list|tuple, y: list|tuple, r: int = 9) -> float:
-    """
-    Calculates the correlation between vectors x and y (must be same length)
-    Calls cov(), std()
-    Output float bounded by [-1, 1] inclusive
-    """
-    return round(cov(x, y) / (std(x) * std(y)), r)
-
-def var(x: list|tuple, r: int = 9) -> float:
-    """
-    Calculate population variance matrix for vector x
-    Calls cov()
-    r is the desired numbers of digits after decimal to round to
-    """
-    return cov(x, x, r)
-
-
-def std(x: list|tuple, r: int = 9) -> float: 
-    """
-    Calculate standard deviation of x
-    Calls var()
-    r is the desired numbers of digits after decimal to round to
-    """
-    return round(sqrt(var(x)), r)
 
 
 if __name__ == "__main__": 
@@ -71,9 +30,9 @@ if __name__ == "__main__":
     # df.hist(df.columns[1:]) # start at second column, first is ID field
     # plt.show()
 
-    xlst, ylst = [1, 2, 3, 4], [10, 20, 30, 40]
-    r = 1
-    cov1, cov2, cov3 = corr(xlst, xlst, r), corr(xlst, ylst, r), corr(ylst, ylst, r)
-    print(f"[[{cov1}, {cov2}], \n[{cov2}, {cov3}]]")
+    # xlst, ylst = [1, 2, 3, 4], [10, 20, 30, 40]
+    # r = 1
+    # cov1, cov2, cov3 = hstat.corr(xlst, xlst, r), hstat.corr(xlst, ylst, r), hstat.corr(ylst, ylst, r)
+    # print(f"[[{cov1}, {cov2}], \n[{cov2}, {cov3}]]")
 
-    # print(np.cov([xlst, ylst]))
+    
