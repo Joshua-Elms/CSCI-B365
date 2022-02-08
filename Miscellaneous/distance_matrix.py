@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.core.multiarray import asarray
 from sklearn.metrics import pairwise_distances
 
 
@@ -7,44 +6,43 @@ def get_minkowski_distance(p1: tuple, p2: tuple, r: int = 2) -> float:
     """
     Generates Minkowski Distance between two points, r is... dimensionality?
     """
+    tmp = 0 # all values will be added to this variable, will be returned
+    cols = len(p1) 
 
     if isinstance(r, str):
         if r.lower() == "inf" or r.lower() == "infinity":
-            r = 100
+            tmp_lst = []
+            for i in range(cols):
+                tmp_lst.append(abs(p1[i] - p2[i]))
 
-    cols = len(p1) 
-    tmp = 0
-    for i in range(cols):
-        tmp += (abs(p1[i] - p2[i])**r)
+            return max(tmp_lst)
 
-    return tmp**(1/r)
+    else: 
+        for i in range(cols):
+            tmp += (abs(p1[i] - p2[i])**r)
+
+        return tmp**(1/r)
 
 
-def create_minkowski_matrix(tpl1: tuple, tpl2: tuple, r: int|str) -> np.ndarray:
+def create_minkowski_matrix(arr: np.ndarray, r: int|str) -> np.ndarray:
     """
     
     """
-    distance_matrix = [[] for i in range(len(tpl1))]
+    d_arr = np.empty((len(arr), len(arr)))# [[] for i in range(len(tpl1))]
 
-    for i, p1 in enumerate(zip(tpl1, tpl2)):
-        for p2 in zip(tpl1, tpl2):
-            distance_matrix[i].append(round(get_minkowski_distance(p1, p2, r), 3))
+    for i, p1 in enumerate(arr):
+        for j, p2 in enumerate(arr):
+            d_arr[i][j] = (round(get_minkowski_distance(p1, p2, r), 8))
 
-    return np.asarray(distance_matrix)
+    return d_arr
 
 
 if __name__=="__main__":
-    # tpl1 = tuple(np.random.randint(0, 10, 10))
-    # tpl2 = tuple(np.random.randint(0, 10, 10))
-    tpl1 = (0, 2, 3, 5)
-    tpl2 = (2, 0, 1, 1)
-    arr1 = asarray(tpl1).reshape(1, -1)
-    arr2 = asarray(tpl2).reshape(1, -1)
-
-    zip1 = zip(tpl1, tpl2)
-    r = 2
-    # distance_matrix = create_minkowski_matrix(tpl1, tpl2, r)
-    # print(arr1)
-    print(pairwise_distances(arr1, arr2, metric="euclidean"))
-    # print(distance_matrix)
-    print(get_minkowski_distance(tpl1, tpl2))
+    r = "inf"
+    for arr in [np.random.rand(2, 4) for i in range(4)]:
+        print("-" * 50)
+        print(create_minkowski_matrix(arr*10, r))
+        print("\n")
+        print(pairwise_distances(arr*10, metric="chebyshev"))
+        print("-" * 50)
+        print("\n\n")
