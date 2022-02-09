@@ -38,11 +38,11 @@ def create_minkowski_matrix(arr: np.ndarray, r: int|str) -> np.ndarray:
 
 
 if __name__=="__main__":
-    r = "inf"
+    r = 2
     for arr in [np.random.rand(2, 4) for i in range(4)]:
         print("-" * 50)
         print(create_minkowski_matrix(arr*10, r))
         print("\n")
-        print(pairwise_distances(arr*10, metric="chebyshev"))
+        print(pairwise_distances(arr*10, metric="euclidean"))
         print("-" * 50)
         print("\n\n")
