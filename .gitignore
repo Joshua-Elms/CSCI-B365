@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Hog Riiiiiiiider!
+Miscellaneous/jpgs
+
 # Distribution / packaging
 .Python
 build/
@@ -127,3 +130,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+Miscellaneous/jpgs/IMG_2799.jpeg
+Miscellaneous/jpgs/IMG_2800.jpeg
+Miscellaneous/jpgs/IMG_2801.jpeg
+Miscellaneous/jpgs/IMG_2802.jpeg
+Miscellaneous/jpgs/IMG_2803.jpeg
