@@ -15,7 +15,7 @@ def set_params(k=2, half_of_points=20, dims=2, means=(5, 15), stdevs=(1, 1)):
     Returns: 
         k: int, determines # of centroids that will be chosen (final # of clusters)
     """
-    means = (5, 10)
+    means = (5, 15)
     stdevs = (2, 2)
     return k, half_of_points, dims, means, stdevs
 
@@ -177,7 +177,7 @@ def generate_graph(df, save_path, step):
         step: which iteration of the algorithm you are on 
     """ 
     sns.set_theme()
-    sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", style="Type").set(title=f"K-Means Algorithm: Step {step}")
+    sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette={"None":"#000000", "C1":"#FF0000", "C2":"#0000FF"}, style="Type", size="Type", sizes=[25,55]).set(title=f"K-Means Algorithm: Step {step}")
     plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
     plt.savefig(f"{save_path}/kmeans_step{step}.jpeg", bbox_inches='tight')
     plt.clf()
@@ -194,7 +194,7 @@ def controller(df, k_num, path):
         generate_graph(df, path, step)
         df, compare = Assignment(df, k_num)
         df, change = Update(df, k_num)
-        changing = False if change < 0.5 else True
+        changing = False if change < 0.1 else True
         step += 1
 
     return step
