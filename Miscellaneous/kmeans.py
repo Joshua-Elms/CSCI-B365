@@ -17,6 +17,8 @@ def set_params(k=2, half_of_points=20, dims=2, means=(5, 15), stdevs=(1, 1)):
     """
     means = (5, 15)
     stdevs = (2, 2)
+    half_of_points = 50
+    k=5
     return k, half_of_points, dims, means, stdevs
 
 
@@ -46,7 +48,7 @@ def generate_data(k, half_of_points, dims, distr_means, stdevs):
 
     dim_ranges = [(column.min(), column.max()) for column in columns] # get min and max of each column into tuple
 
-    means = [rng.uniform(*dim_range, size=dims).tolist() for dim_range in dim_ranges] # create dim sized, randomly selected points to represent centroids
+    means = [rng.uniform(*dim_range, size=k).tolist() for dim_range in dim_ranges] # create dim sized, randomly selected points to represent centroids
 
     return data, means
 
@@ -88,7 +90,7 @@ def build_df(matrix, rm_means, dims, k_num):
 
     # Initialize df containing all centroids
     cm_means = get_column_major(rm_means)
-    k_dict = {col_names[i]:cm_means[i] for i in range(dims)} # Maps Dim1: initial dim1 values for each k, etc
+    k_dict = {col_names[d]:rm_means[d] for d in range(dims) for i in range(k_num)} # Maps Dim1: initial dim1 values for each k, etc
     k_dict["Type"] = "centroid"
     k_dict["Cluster"] =  [f"C{i+1}" for i in range(k_num)] # Assigns a cluster to each centroid
 
@@ -154,9 +156,9 @@ def Update(df, k_num):
 
     seq = tuple(range(-1, -k_num-1, -1))
 
-    for i in range(k_num):
-        df.iloc[seq[i], 0] = Dim_1_mean[i-1]
-        df.iloc[seq[i], 1] = Dim_2_mean[i-1]
+    for i in range(k_num): # (i - 1)
+        df.iloc[seq[i], 0] = Dim_1_mean[seq[i]]
+        df.iloc[seq[i], 1] = Dim_2_mean[seq[i]]
 
     l3 = list(df[df["Type"] == "centroid"]["Dim_1"])
     l4 = list(df[df["Type"] == "centroid"]["Dim_2"])
@@ -166,6 +168,7 @@ def Update(df, k_num):
     largest_move = max([dist((k_origs[i][0], k_origs[i][1]), (k_modded[i][0], k_modded[i][1])) for i in range(k_num)])
 
     return df, largest_move 
+
 
 def generate_graph(df, save_path, step):
     """
@@ -177,7 +180,7 @@ def generate_graph(df, save_path, step):
         step: which iteration of the algorithm you are on 
     """ 
     sns.set_theme()
-    sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette={"None":"#000000", "C1":"#FF0000", "C2":"#0000FF"}, style="Type", size="Type", sizes=[25,55]).set(title=f"K-Means Algorithm: Step {step}")
+    sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette={"None":"#000000", "C1":"#FF0000", "C2":"#0000FF", "C3":"#00FF00", "C4":"#D030C9", "C5":"#D09D30"}, style="Type", size="Type", sizes=[25,80]).set(title=f"K-Means Algorithm: Step {step}")
     plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
     plt.savefig(f"{save_path}/kmeans_step{step}.jpeg", bbox_inches='tight')
     plt.clf()
@@ -225,13 +228,6 @@ def main():
     iters = controller(df, k_num, path)
     make_gif(path, iters)
 
-
-# def main():
-#     k_num = set_params()
-#     init_matrix, init_means = generate_data()
-
-
-#     pass
 
 if __name__ == "__main__": 
     main()
