@@ -16,9 +16,9 @@ def set_params(k=2, half_of_points=20, dims=2, means=(5, 15), stdevs=(1, 1)):
         k: int, determines # of centroids that will be chosen (final # of clusters)
     """
     means = (5, 15)
-    stdevs = (2, 2)
-    half_of_points = 50
-    k=5
+    stdevs = (2, 4)
+    half_of_points = 80
+    k=3
     return k, half_of_points, dims, means, stdevs
 
 
@@ -170,7 +170,7 @@ def Update(df, k_num):
     return df, largest_move 
 
 
-def generate_graph(df, save_path, step):
+def generate_graph(df, save_path, step, k_num, plines=None, plabels=None):
     """
     Generate plot of all points and centroids
 
@@ -179,12 +179,37 @@ def generate_graph(df, save_path, step):
         save_path: relative / absolute path to folder where plot should be saved
         step: which iteration of the algorithm you are on 
     """ 
-    sns.set_theme()
-    sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette={"None":"#000000", "C1":"#FF0000", "C2":"#0000FF", "C3":"#00FF00", "C4":"#D030C9", "C5":"#D09D30"}, style="Type", size="Type", sizes=[25,80]).set(title=f"K-Means Algorithm: Step {step}")
-    plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
-    plt.savefig(f"{save_path}/kmeans_step{step}.jpeg", bbox_inches='tight')
-    plt.clf()
-    pass
+
+    all_color_lst = ["#FF0000", "#0000FF", "#00FF00", "#D030C9", "#D09D30"]
+    all_color_dict = {"None":"#000000", "C1":"#FF0000", "C2":"#0000FF", "C3":"#00FF00", "C4":"#D030C9", "C5":"#D09D30"}
+
+    color_dict = {f"C{i+1}":str(all_color_lst[i]) for i in range(k_num)}
+    color_dict["None"] = "#000000"
+    color_lst = all_color_lst[:k_num+1]
+
+    if step > 0:
+
+        sns.set_theme()
+        sp = sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette=all_color_dict, style="Type", size="Type", sizes=[25,80]).set(title=f"K-Means Algorithm: Step {step}")
+        plt.legend([],[], frameon=False)
+        sp[0].figure.legend(plines, plabels, bbox_to_anchor=(0.915, 0.88), loc='upper left', borderaxespad=0)
+        plt.savefig(f"{save_path}/kmeans_step{step}.jpeg", bbox_inches='tight')
+        plt.clf()
+        pass 
+
+    else:
+        sns.set_theme()
+        sp = sns.scatterplot(data=df, x="Dim_1", y="Dim_2", hue="Cluster", palette=all_color_dict, style="Type", size="Type", sizes=[25,80]).set(title=f"K-Means Algorithm: Step {step}")
+        plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+        plt.savefig(f"{save_path}/kmeans_step{step}.jpeg", bbox_inches='tight')
+        
+        lines_labels = [ax.get_legend_handles_labels() for ax in sp[0].figure.axes]
+        lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+        plt.clf()
+        return lines, labels
+
+        
+        
 
 
 def controller(df, k_num, path):
@@ -193,12 +218,13 @@ def controller(df, k_num, path):
     """
     changing = True
     step = 0
+    lines, labels = generate_graph(df, path, step, k_num)
     while changing:
-        generate_graph(df, path, step)
         df, compare = Assignment(df, k_num)
         df, change = Update(df, k_num)
         changing = False if change < 0.1 else True
         step += 1
+        generate_graph(df, path, step, k_num, lines, labels)
 
     return step
 
