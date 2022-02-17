@@ -17,8 +17,8 @@ def set_params(k=2, half_of_points=20, dims=2, means=(5, 15), stdevs=(1, 1)):
     """
     means = (5, 15)
     stdevs = (2, 4)
-    half_of_points = 80
-    k=3
+    half_of_points = 3
+    k=2
     return k, half_of_points, dims, means, stdevs
 
 
@@ -254,6 +254,17 @@ def main():
     iters = controller(df, k_num, path)
     make_gif(path, iters)
 
+def classwork():
+    path = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Miscellaneous/jpgs"
+    k_num, half_of_points, dims, distr_means, stdevs = set_params()
+    data = np.asarray([[4, 5], [2, 4], [1, 3], [3, 3], [6, 2], [8, 3], [7, 1]])
+    dim_ranges = [(column.min(), column.max()) for column in data] # get min and max of each column into tuple
+    rng = np.random.default_rng()
+    d_means1 = [rng.uniform(*dim_range, size=k_num).tolist() for dim_range in dim_ranges] # create dim sized, randomly selected points to represent centroids
+    d_means2 = [[1, 7, 4], [3, 1, 5]]
+    df = build_df(data, d_means1, dims, k_num)
+    iters = controller(df, k_num, path)
+    make_gif(path, iters)
 
 if __name__ == "__main__": 
     main()
