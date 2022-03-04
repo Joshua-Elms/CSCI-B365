@@ -1,7 +1,9 @@
 from types import NoneType
 import numpy as np
 import math
-import pandas
+import pandas as pd
+import seaborn as sns
+from matplotlib.pyplot import show
 from time import perf_counter as pfc
 
 
@@ -178,4 +180,18 @@ if __name__ == "__main__":
     # avg = [cnt_i / num for cnt_i in cnt]
     # print("Average iterations")
     # [print(f"Average iterations w/ k = {i + 2}: {avg[i]}") for i in range(len(avg))]
-    print(kmeans(2))
+    df_data = pd.read_csv("synthetic.data", sep=", ")
+
+    data_arr = df_data[["x", "y"]].to_numpy()
+
+    centroids, labels = kmeans(k=2, data=data_arr)
+
+    # sns.scatterplot(data = df_data, x = "x", y = "y", hue = "class").set(title="Synthetic Data")
+
+    # show()
+
+    print(len(labels))
+
+
+    # centroids, labels = kmeans(k=3, data=data)
+    # print(labels)
