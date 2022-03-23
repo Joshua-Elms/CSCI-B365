@@ -1,0 +1,49 @@
+Variable SB CIN yields a correlation of 0.015347928804008745
+Variable SB LCL yields a correlation of 0.07137822887622386
+Variable SB EL yields a correlation of 0.09032696251962256
+Variable SB LI yields a correlation of 0.12833868321314562
+Variables SB CIN and SB LI yield a correlation of 0.12978022057388883
+Variables SB LCL and SB LI yield a correlation of 0.13222249888485246
+Variables SB LCL and Shear 0-6 km yield a correlation of 0.1414962953976106
+Variables SB EL and Shear 0-6 km yield a correlation of 0.17559948063530462
+Variables SB LI and Shear 0-6 km yield a correlation of 0.20592553343069403
+Variables SB CIN, SB LI, and Shear 0-6 km yield a correlation of 0.20708232787098135
+Variables SB LCL, SB LI, and Shear 0-6 km yield a correlation of 0.21011729033243765
+Variables SB LI, SB hght0c, and Shear 0-6 km yield a correlation of 0.2127893720875371
+Variables SB LI, SB b3km, and Shear 0-6 km yield a correlation of 0.2153773298189473
+Variables SB CIN, SB LI, SB b3km, and Shear 0-6 km yield a correlation of 0.21554538440640145
+Variables SB CIN, SB LI, Shear 0-6 km, and Eff Inflow yield a correlation of 0.21608613101104113
+Variables SB LCL, SB LI, SB b3km, and Shear 0-6 km yield a correlation of 0.2175701744551031
+Variables SB LI, SB hght0c, SB b3km, and Shear 0-6 km yield a correlation of 0.217719926824231
+Variables SB LI, SB b3km, Shear 0-6 km, and Eff Inflow yield a correlation of 0.2214997567203551
+Variables SB CIN, SB LI, SB b3km, Shear 0-6 km, and Eff Inflow yield a correlation of 0.22180529893245127
+Variables SB LCL, SB LI, SB b3km, Shear 0-6 km, and Eff Inflow yield a correlation of 0.22192404663006873
+Variables SB LI, SB hght0c, SB b3km, Shear 0-6 km, and Eff Inflow yield a correlation of 0.22202198870638937
+Variables SB LI, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22243989842267672
+Variables SB CIN, SB LI, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.2228076461993568
+Variables SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22302517159850221
+Variables SB LI, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and Eff SRH yield a correlation of 0.22310958976113998
+Variables SB CIN, SB LCL, SB LI, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.223250252522047
+Variables SB CIN, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22335012816908964
+Variables SB CIN, SB LI, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and Eff SRH yield a correlation of 0.22344421956938537
+Variables SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and Eff SRH yield a correlation of 0.2236401644156192
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22391276950322694
+Variables SB CIN, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and Eff SRH yield a correlation of 0.22393468820646684
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22440901507528221
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, and SRH 0-3 km yield a correlation of 0.22449565704723642
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and SRH 0-3 km yield a correlation of 0.22467574631402176
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], and Eff SRH yield a correlation of 0.22475373279585106
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, SRH 0-1 km, and SRH 0-3 km yield a correlation of 0.22498794347147
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, SRH 0-1 km, and SRH 0-3 km yield a correlation of 0.22506604554383824
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, SRH 0-1 km, and SRH 0-3 km yield a correlation of 0.2252090750157137
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, SRH 0-1 km, and SRH 0-3 km yield a correlation of 0.22530203194958542
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, and SRH 0-3 km yield a correlation of 0.22539039951438916
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.22570472652055576
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.2257409199137126
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB cap, SB b3km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.22578000383112407
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.22593460790888892
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.225984363125125
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB cap, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.22601976587018657
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB cap, SB b3km, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.2260713933989976
+Variables SB CIN, SB LCL, SB LFC, SB LI, SB hght0c, SB cap, SB b3km, SB brn, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.22609718496442965
+Variables SB CIN, SB LCL, SB LFC, SB EL, SB LI, SB hght0c, SB cap, SB b3km, SB brn, Shear 0-1 km, Shear 0-6 km, Eff Inflow, ebwd[0], SRH 0-1 km, SRH 0-3 km, and Eff SRH yield a correlation of 0.2261482666281449
