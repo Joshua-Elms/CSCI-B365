@@ -35,5 +35,4 @@ with open(data_in, "r") as f1:
                         pos = 1
                         entry_lst.append(f2.readline().strip().rstrip("\n"))
                         f3.write(",".join(entry_lst) + "\n")
-                        # print(f"That entry was {len(entry_lst) + 1} long.")
                         entry_lst = []
