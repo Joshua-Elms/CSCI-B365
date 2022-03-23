@@ -9,7 +9,7 @@ This uses a lazy-load method of not reading or writing entire files at once, so 
 
 data_in = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Meteorology_Modeling_Project/data/raw_data.txt"
 sizes_in = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Meteorology_Modeling_Project/data/raw_sizes.txt"
-data_out = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Meteorology_Modeling_Project/data/pretty_data.csv"
+data_out = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Meteorology_Modeling_Project/data/tidy_data.csv"
 col_names_path = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/Meteorology_Modeling_Project/data/53parameters_matlab.txt"
 
 with open(data_in, "r") as f1:
