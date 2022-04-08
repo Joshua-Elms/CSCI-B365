@@ -62,7 +62,7 @@
 \PaperTitle{Semester Project} % Article title
 
 \Authors{Joshua Elms\textsuperscript{1}*} % Authors
-\affiliation{\textsuperscript{1}\textit{Computer Science, School of Informatics , Computing and Engineering, Indiana University, Bloomington, IN, USA}} % Author affiliation
+\affiliation{\textsuperscript{1}\textit{Data Science, School of Informatics , Computing and Engineering, Indiana University, Bloomington, IN, USA}} % Author affiliation
 
 
 \Keywords{Meteorology --- Numerical Weather Prediction --- Machine Learning} % Keywords - if you don't want any simply remove all the text between the curly brackets
@@ -96,14 +96,14 @@
 
 \section{Problem and Data Description} % The \section*{} command stops section numbering
 
-\:According to the NOAA Annual Severe Weather website, there were 3,762 recorded severe hail events (hail over 0.75") in the US in 2021 alone. Beyond the noble goal of furthering our understanding of the natural world, the ability to accurately predict which locations will experience hail storms could benefit insurance companies who pay out an average of \$12,000 for residential damage claims and \$4,000 for automobile claims. Multiplied by thousands of storms per year and hundreds of thousands of possible claims per storm, it is clear that increasing advanced warming times for likely hail conditions could have massive benefits for both the general public and insurance companies alike.
+According to the NOAA Annual Severe Weather website, there were 3,762 recorded severe hail events (hail over 0.75") in the US in 2021 alone. Beyond the noble goal of furthering our understanding of the natural world, the ability to accurately predict which locations will experience hail storms could benefit insurance companies who \href{https://www.insurance.com/coverage/home-hail-damage-insurance-claims#:~:text=hail\%20damage\%20insurance-,Average\%20insurance\%20payout\%20for\%20hail\%20damage,may\%20be\%20higher\%20or\%20lower"}{pay out} an average of \$12,000 for residential damage claims and \$4,000 for automobile claims. Multiplied by thousands of storms per year and hundreds of thousands of possible claims per storm, it is clear that increasing advanced warming times for likely hail conditions could have massive benefits for both the general public and insurance companies alike.
 
-The data for this project consists of approximately 29,000 reports of severe hail events and the meteorological conditions present during the event. The hail event data was collected from the 2012-2016 entries in the \href{https://www.spc.noaa.gov/wcm/#data}{NOAA Storm Prediction Center database}. After extracting just the hail sizes, coordinates, and dates/times, those parameters were entered into the North American Mesoscale Model to determine vertical profiles of temperature, humidity, and wind within 3 hours and 20 km of the individual hail events. The meteorological profiles were passed to an open-source python program, \href{https://github.com/sharppy/SHARPpy}{SHARPpy}, to calculate the exclusively continuous, numerical parameters we will be discussing in the following table.
+The data for \href{https://github.com/Joshua-Elms/CSCI-B365}{this project} consists of approximately 29,000 reports of severe hail events and the meteorological conditions present during the event. The hail event data was collected from the 2012-2016 entries in the \href{https://www.spc.noaa.gov/wcm/#data}{NOAA Storm Prediction Center database}. After extracting just the hail sizes, coordinates, and dates/times, those parameters were entered into the North American Mesoscale Model to determine vertical profiles of temperature, humidity, and wind within 3 hours and 20 km of the individual hail events. The meteorological profiles were passed to an open-source python program, \href{https://github.com/sharppy/SHARPpy}{SHARPpy}, to calculate the exclusively continuous, numerical parameters we will be discussing in the following table.
 
 After the data is extracted from the various sources and tabularized, it forms a CSV with 21902 entries and 55 fields, including the target variable of hailstone size.
 \begin{figure}[H]
 \centering
-\includegraphics[width = 4.5cm, height = 15cm]{"table2.png"}
+\includegraphics[width = 4.5cm, height = 15cm]{"table3.png"}
 \end{figure}
 
 \bigskip
@@ -158,11 +158,23 @@ With so many samples from a naturally occuring phenomenon, it is reasonable to e
 
 Upon generating the QQ Plot, it becomes clear that there is a fundamental problem with our data if this is the best distribution we can picture it against. This can be explained, at least in part, by the very nature of the data we collected; NOAA only collects reports of hail that range from 0.75" upwards, which is why we see only a few points in our sample quantile below this on the QQ Plot. Of course, filtering out what might be a significant portion of the actual data is likely to have prevented us from finding the true distribution the data was drawn from, but this is just one of the facts we must handle when dealing with real data, which may be fundamentally biased.
 
-To find patterns in more than just a few variables, we can turn to a correlation plot. This shows pairwise correlation for every variable in the data, so it can be expected to reveal any linear trends between parameters. A few such trends can be noted: CAPE and SHEAR 
+To find patterns in more than just a few variables, we can turn to a correlation plot. This shows pairwise correlation for every variable in the data, so it can be expected to reveal any linear trends between parameters. A few such trends can be noted: CAPE and SRH have almost no correlation, which is fortunate; CAPE represents energy potential for a storm, and SRH measures twisting forces in storms. When both variables are high, they generally provides a good condition for large thunderstorms to occur, so the fact that they must occur independently is beneficial for those who are not partial to frequent large thunderstorms.
+
+One abnormality you might spot is LI's (Lifted Index) strong negative correlation with many of the other parameters, represented by a dark purple line through the chart. This is seems odd, but the explanation is quite simple; it is the only parameter that is always negative as a result of how it is measured, and it is most related to CAPE, so it makes sense for it to have a very strong negative correlation with anything else that is similar to CAPE. 
 
 \begin{figure}[H]
 \includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/all_corrs.png"} 
 \end{figure}
+
+To briefly cover a few of the many remaining insights this chart has to offer, we have to understand the breakdown of these variables. 1-14 are all metrics calculated from just the original sounding profile we found, but after that, many of the parameters are actually composites, or (mostly) linear compositions of the other parameters that, when combined, form a more useful measure. This is why so much of the correlation plot has high correlation (light colors); many of the parameters we have are based on one another, so it is to be expected that they should increase or decrease along with the others. It may seem like having the composite variables would be unnecessary then, but there are two primary reasons to keep them: first, a few of them contain information not held in our parameters 1-14, and modeling is entirely focused on analyzing as much quality information as possible. Second, depending on the type dimensionality reduction applied, it is very likely that we will be dealing with very few dimensions during our modeling phase, and having a few somewhat redundant variables form our components would not be a detriment to the model; rather, it just might allow for more representative ways to combine the data.
+
+Finally, turn your attention to the bottom row or rightmost column of the plot, where HAIL SIZE IN is located. The row is by far the most uniform in color, with low correlation across all variables. This is why we are performing our research; if it were linearly correlated with one of our other parameters, then predicting hail size would be trivial. In fact, the highest-correlation parameter to HAIL SIZE IN, which is SHIP, is still not even above a correlation of around 0.2. This is no surprise, however, as SHIP is not actually intended to forecast hail sizes, but rather to classify hail events as likely to produce hail above or below 2". We can see how well it works by sorting the data into two bins around 2" and plotting SHIP's boxplots for each, as below.
+
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/ship_boxplots.png"} 
+\end{figure}
+
+While SHIP appears to work incredibly well at for separating hail sizes into two groups, we are attempting a much trickier task: accurate regression. This will be the primary focus of the next section of the paper, and will build off of many of the concepts and ideas expressed throughout the past two sections.
 
 
 \bigskip
