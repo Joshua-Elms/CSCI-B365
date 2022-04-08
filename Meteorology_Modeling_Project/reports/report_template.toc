@@ -7,5 +7,5 @@
 \contentsline {section}{\numberline {3}Algorithm and Methodology}{3}{section.3}%
 \contentsline {section}{\numberline {4}Experiments and Results}{3}{section.4}%
 \contentsline {section}{\numberline {5}Summary and Conclusions}{3}{section.5}%
-\contentsline {section}{Acknowledgments}{3}{section*.3}%
+\contentsline {section}{Acknowledgments}{3}{section*.4}%
 \contentsfinish 
