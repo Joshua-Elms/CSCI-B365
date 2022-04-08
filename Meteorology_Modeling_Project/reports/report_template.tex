@@ -156,7 +156,9 @@ With so many samples from a naturally occuring phenomenon, it is reasonable to e
 \includegraphics[width=0.6\textwidth, center=8.5cm]{"plots/qq_plot.png"} 
 \end{figure}
 
-Upon generating the QQ Plot, it becomes clear that there is a fundamental issue with our data if this is the best distribution we can picture it against. This can be explained, at least in part, by the very nature of the data we collected; NOAA only collects reports of hail that range from 0.75" upwards, which is why we see only a few points in our sample quantile below this on the QQ Plot. Of course, filtering out what might be a significant portion of the actual data is likely to have prevented us from finding the true distribution the data was drawn from, but this is just one of the facts we must handle when dealing with real data, which may be fundamentally biased.
+Upon generating the QQ Plot, it becomes clear that there is a fundamental problem with our data if this is the best distribution we can picture it against. This can be explained, at least in part, by the very nature of the data we collected; NOAA only collects reports of hail that range from 0.75" upwards, which is why we see only a few points in our sample quantile below this on the QQ Plot. Of course, filtering out what might be a significant portion of the actual data is likely to have prevented us from finding the true distribution the data was drawn from, but this is just one of the facts we must handle when dealing with real data, which may be fundamentally biased.
+
+To find patterns in more than just a few variables, we can turn to a correlation plot. This shows pairwise correlation for every variable in the data, so it can be expected to reveal any linear trends between parameters. A few such trends can be noted: CAPE and SHEAR 
 
 \begin{figure}[H]
 \includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/all_corrs.png"} 
