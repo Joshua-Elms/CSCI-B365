@@ -4,8 +4,8 @@
 \contentsline {subsection}{\numberline {2.1}Parameter Selection}{2}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Handling Missing Values}{3}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Exploratory Data Analysis}{3}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Algorithm and Methodology}{3}{section.3}%
-\contentsline {section}{\numberline {4}Experiments and Results}{3}{section.4}%
-\contentsline {section}{\numberline {5}Summary and Conclusions}{3}{section.5}%
-\contentsline {section}{Acknowledgments}{3}{section*.4}%
+\contentsline {section}{\numberline {3}Algorithm and Methodology}{4}{section.3}%
+\contentsline {section}{\numberline {4}Experiments and Results}{4}{section.4}%
+\contentsline {section}{\numberline {5}Summary and Conclusions}{4}{section.5}%
+\contentsline {section}{Acknowledgments}{4}{section*.7}%
 \contentsfinish 

@@ -144,6 +144,24 @@ We can be sure no others variables changed during the application of KNN Imputat
 
 \subsection{Exploratory Data Analysis}
 
+We can begin our analysis with the most simple plot of all; we can observe how HAIL SIZE IN, our target variable, is distributed with just two histograms each with different y-axes (linear and log scales). Of interest in these plots is infrequently a report of very large hailstones is received; the right tail is almost invisible on our normal histogram. This means that any modeling we perform will have to be trained more on the infrequent data, as that is the very behavior we are looking to predict due to large hail's ability to cause significant property damage.
+
+\begin{figure}[H]
+\includegraphics[width=0.6\textwidth, center=8.5cm]{"plots/hail_hist.png"} 
+\end{figure}
+
+With so many samples from a naturally occuring phenomenon, it is reasonable to expect our HAIL SIZE IN variable to follow a preexisting distribution. The visual test for this is the QQ Plot, in which the theoretical quantiles of a statistical distribution are compared to actual quantiles found in our sample data. If a line can be draw straight through and capture the direction of the points, then we say that our variable is drawn from the theoretical distribution we used for the QQ Plot. To find our theoretical distribution, we simply run it HAIL SIZE IN through a library that iteratively test dozens of distributions and automatically determine which one best fits our data according to Sum of Squared Error. We found that a generalized normal distribution with shape of 0.48, mean of 1, and SD of 0.028.
+
+\begin{figure}[H]
+\includegraphics[width=0.6\textwidth, center=8.5cm]{"plots/qq_plot.png"} 
+\end{figure}
+
+Upon generating the QQ Plot, it becomes clear that there is a fundamental issue with our data if this is the best distribution we can picture it against. This can be explained, at least in part, by the very nature of the data we collected; NOAA only collects reports of hail that range from 0.75" upwards, which is why we see only a few points in our sample quantile below this on the QQ Plot. Of course, filtering out what might be a significant portion of the actual data is likely to have prevented us from finding the true distribution the data was drawn from, but this is just one of the facts we must handle when dealing with real data, which may be fundamentally biased.
+
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/all_corrs.png"} 
+\end{figure}
+
 
 \bigskip
 \bigskip
