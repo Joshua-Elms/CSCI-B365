@@ -126,19 +126,21 @@ We first attempted to determine how well these these various calculation techniq
 
 A few of the parameters differ greatly by calculation method; In the most extreme cases (CIN, LFC), MU and ML had a correlation of roughly .4, which is low enough to consider them very different measures. As a result, research was done into which method would yield most accurate results for modeling purposes. While the meteorological field is currently unable to provide conclusive evidence for one method's superiority, it is mentioned in the NOAA Storm Prediction Center source above that ML can produce slightly more accurate predictions of late afternoon cloud base heights. As the severe hail events at the center of our research are exclusively created by thunderstorms (which are most common in the afternoon, when warm and moist air is most often present), it is our opinion that employing the ML parameters in our subsequent visualizations and models will be marginally more effective than the others. Accordingly, any unspecified reference to one of the 11 variables in question will refer to the ML version.
 
-There is, of course, the possibility of revising the data; this may include bringing in other parameters that can be found with the same sounding profile described in the Data Description, using the SB or MU methods in addition to ML if it does not excessively increase computational complexity, or even finding a source of higher-resolution sounding profiles (3 hour intervals instead of 6, for example.)
+There is, of course, a possibility of revising the data during the modeling phase if results are unsatisfactory, which may include bringing in other parameters that can be found with the same sounding profile described in the Data Description, using the SB or MU methods in addition to ML if they do not excessively increase computational complexity, or even finding a source of higher-resolution sounding profiles (3 hour intervals instead of 6, for example.)
 
 \clearpage
 
 \subsection{Handling Missing Values}
 
-The data contained N missing values initially, with the majority of them coming from the x, y, and z fields. Due to the entirely continuous nature of the data, we deemed it acceptable to apply KNN (K-Nearest Neighbor) Imputation over the data. In our case, we do this by calculating the weighted mean (the more similar points are, the more they factor into the mean) of the 5 most similar points for any entry with a missing value. This weighted mean is entered as the new value in place of any missing value. The process has the quality of maintaining both mean and variance between the pre- and post-transformation data, which we visualize below with a scatterplot. The axes display every field of the data before and after transformation; if each point falls on the straight line (slope of 1), then the distribution of the data has been preserved.
+The data contains 20,920 missing values; 2708 in LFC, 2069 in EFF INFLOW, and 16143 in CAP. Due to the entirely continuous nature of the data, we deemed it acceptable to apply KNN (K-Nearest Neighbors) Imputation over the data. In our case, we do this by calculating the weighted mean (the more similar points are, the more they factor into the mean) of the 5 most similar points for any entry with a missing value. This weighted mean is entered as the new value in place of any missing value. The process has the quality of maintaining both mean and variance between the pre- and post-transformation data, which we visualize below with a scatterplot. Each axis represents either the original or imputed data, and each red point represents the square root of mean or standard deviation for one of the three variables that were modified by KNN Imputation. The blue line has a slope of 1, so any points that fall on the blue line represent variables that maintain their distribution after KNN Imputation.
 
 \begin{figure}[H]
-\includegraphics[width=0.5\textwidth]{"plots/imputation_plot.png"} 
+\includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/imputation_plot.png"} 
 \end{figure}
 
-The clear outlier is T500; as of yet we am unsure of why it was so heavily modified after KNN imputation, but it appears the rest of the data has been changed minimally. As such, we will use the KNN imputed data for the duration of the project and be sure to apply the same technique over any outside data used that our resulting models are deployed on.
+\newpage
+
+We can be sure no others variables changed during the application of KNN Imputation over the data, so our only variables of concern are the three we did modify. To be sure that the information they contain was not transformed, we test both their mean and standard deviations before and after transformation; they are nearly identical, so we can confidently conclude that we successfully imputed missing data without modifying the underlying distribution.
 
 \subsection{Exploratory Data Analysis}
 
