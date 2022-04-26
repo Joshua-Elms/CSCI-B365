@@ -1,5 +1,4 @@
 from copy import deepcopy
-from unicodedata import numeric
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
@@ -77,11 +76,25 @@ def k_fold(train, algorithm, params, k, rng):
     rng.shuffle(indices)
 
     tmp_length = deepcopy(length)
-    partitions = [(length // k) + 1 if _ < length % k else (length // k) for _ in range(k)]
+    partition_sizes = [(length // k) + 1 if _ < length % k else (length // k) for _ in range(k)]
+    sum = 0
+    partition_ranges = [] 
+    for size in partition_sizes:
+        partition_ranges.append(list(range(sum, sum + size)))
+        sum += size
+
+    print(partition_ranges)
+    # [np.arange(size) for size in partition_sizes]
+
+    for i in range(k):
+        train_ranges = partition_ranges[:i] + partition_ranges[i+1:]
+        print(np.array(train_ranges, dtype="object"))
+
+
     pass
 
 if __name__ == "__main__":
-    rng = np.random.default_rng()
+    rng = np.random.default_rng(100)
     # path = "/Users/joshuaelms/Desktop/github_repos/CSCI-B365/HW6/car.data"
     # df = pd.read_csv(path, header = None, names = ["buying", "maint", "doors", "persons", "lug_boot", "safety", "acceptability"])
     # print(df)
@@ -99,7 +112,7 @@ if __name__ == "__main__":
 
 
     # print(numeric_df)
-    arr_train = np.array([[0, 0, 1], [15, 15, 2], [10, 10, 3]])
+    arr_train = np.array([[0, 0, 1], [15, 15, 2], [10, 10, 3], [0, 1, 1]])
     arr_test = np.array([[16, 16], [9, 9], [0, 0]])
     k = 2
    
