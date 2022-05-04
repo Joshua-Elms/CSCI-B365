@@ -186,7 +186,13 @@ While SHIP appears to work incredibly well at for separating hail sizes into two
 
 \section{Algorithm and Methodology}
 
-Briefly explain the algorithms in this section, i.e., linear regressions. You can add more subsections if needed, i.e., regression trees etc.
+The algorithms used in the experimentation section of this report are simply the ten most popular regression algorithms available for Python, according to the Educative Blog. Most of these are based on linear regression or random forests, but small differences in loss functions or other peculiarities cause them to perform very differently over the data. The simplest of these ten models was ordinary least squares linear regression, which simply fits a line to the data by minimizing residiual errors. While this is a very common approach, it was clear from the low correlation found in the above sections that no linear combination of variables would provide good predictions for Hailstone Size. Therefore, other methods will be used. 
+
+The two most similar models to linear regression are SGD (Stochastic Gradient Descent) Regression and ElasticNet. SGD differs only in the method of minimizing the loss function; rather than using a deterministic approach like Ordinary Least Squares allows, it iteratively decreases a loss function by following a gradient downwards. ElasticNet is actually a particular case of SGD that combines L1 and L2 norms to regularize the function, where SGD only uses one or the other.
+
+The other model I will test variations of is almost identical to ordinary least squares linear regression: Ridge Regression. In short, Ridge Regression attempts to reduce overfitting in the model by adding a bias term while calculating the Residual Sum of Squares for the regression line. This is a classic case of the standard tradeoff in machine learning, bias vs. variance. Here, fit error (bias) is increased at to allow for better extensibility of the model (variance). The two versions of Ridge Regression that I will employ are Bayesian Ridge and Kernel Ridge. Bayesian is similar to regular Ridge Regression more in function than in form; it operates over probabilistic spaces rather than distance, but makes the same tradeoff as Ridge Regression in decreasing variance at the cost of increased bias. While Bayesian Ridge is easy to apply to any dataset for regression, it has the unfortunate downside of having very expensive inference due to the sheer number of probabilites that are calculated and stored for use. Kernel Regression is a hybrid of Ridge Regression that also allows for non-linear combinations of the features to be formed, which may increase accuracy of the model at the expense of higher training time and model complexity. Similar to Kernel Regression is SVR (Support Vector Regression), which is identical but for the cost function employed; while Kernel Ridge uses squared error loss, SVR uses $\epsilon$-insensitive loss, which is exactly what it sounds like; any error less than $\epsilon$ is ignored, leading to very different outcomes than squared loss.
+
+The other four algorithms are all variations on Gradient Boosting and Decision Trees, with varying degrees of complexity. This includes Gradient Boosting, XGBoost, LGBM, and CatBoost. Gradient Boosting is a model similar to Random Forests, but with a few clear advantages: instead of filling out each tree to its full depth, Gradient Boosting relies on many smaller trees (or "weak learners") that are made to minimize the predefined loss function. This allows Gradient Boosting to generally outperform Random Forests, but there are numerous modificiations that can be made to Gradient Boosting to improve it as well. XGBoost (Extreme Gradient Boosting) is a particular implementation of Gradient Boosting that is designed to be both more accurate and more computationally effective than other algorithms. Another modification of standard Gradient Boosting is LGBM (Light Gradient Boosting Model), which adds a combination of other techniques that can reduce computational complexity and increase information gained from small datasets. Finally, CatBoost is an implementation of Gradient Boosting that fundamentally changes how the aforementioned "weak learners" are built. These Gradient Boosting methods are rapidly gaining popularity (largely among those who are tired of hearing Neural Nets mentioned constantly).
 
 
 \bigskip
@@ -196,6 +202,21 @@ Briefly explain the algorithms in this section, i.e., linear regressions. You ca
 %----------------------------------------------------------------------------------------
 \section{Experiments and Results}
 
+Some considerations must be made in terms of this project's methodology. First, protecting against overfitting: to avoid this, I will be employing a train-test-validate split of 60-25-15 for the data. To do this, I will first split the data 75-25 after normalization, and set aside the smaller portion for use as the final test set. Then, each of the ten algorithms above will be used in 5-fold cross validation with the default model hyperparameters. My primary accuracy metric will be MAE (Mean Absolute Error), and it is important to note that regression model performance is entirely relative, as there is no class to compare it to or confusion matrix to analyze. By taking the mean of the 5 accuracy scores returned for each algorithm, I will sort the models by their performance. The best 3 models will become my focus, and I will use the trained models to predict Hailstone Size for the held-out remainder of the data. The MAE for each of these three models will determine which algorithm was most effective over this dataset. 
+
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/5-fold.png"} 
+\end{figure}
+
+The results of the 5-fold Cross-Validation, shown above, clearly show XGBoost, SVR, and ElasticNet to be the three lowest-error models, but before those are discussed, we have to ask: why is the average error for SGD Regression so incredibly high? Coming in around 26,000, it is orders of magnitude greater than most of our other models. The best explanation I can provide for this comes from the actual definition of SGD. SGD works by randomly sampling the data and calculating the gradient of those samples only, then moving the parameters in whichever direction minimizes the loss function. This, however, also explains why it has such high potential for error; if the data is not well-suited for random sampling or the samples taken do not represent the data well, then SGD is capable of failing massively when the model produced is actually evaluated. This is corroborated by observing the errors for each fold; the absolute errors produced for this run of SGD range from 0.05 to approximately 140,000. This tells us that SGD may be capable of producing good results, but an optimized version of it (like ElasticNet) that is more consistent will almost certainly be a better choice for final models.
+
+Now that we have resolved why SGD has been so ineffective, we can analysze the efficacy of the 3 models that were found to have the lowest error. The trained models from the 5-fold CV were returned at the end and saved, so we simply have to use each of the 5 instances of the 3 models to perform inference on the held-out quarter of the data from earlier. By doing this, and using the Mean Absolute Error method mentioned above, and averaging the errors for each group of 5 trained models, we find the following errors. 
+
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth, center=8.5cm]{"plots/3_mae.png"} 
+\end{figure}
+
+Somewhat surprisingly (given its higher error), the SVR (Support Vector for Regression) performed significantly better than the other two models, yielding mean absolute errors around 0.34". This means that, given all of the variables used to train the model, it could predict hailstone sizes to within a third of an inch, on average. The other models were closer to 0.4", so for our purposes, we would probably avoid them in favor of SVR.
 
 \bigskip
 \bigskip
@@ -203,6 +224,9 @@ Briefly explain the algorithms in this section, i.e., linear regressions. You ca
  % Summary and Conclusions
 %----------------------------------------------------------------------------------------
 \section{Summary and Conclusions}
+
+This report was produced with the intention of developing a better method to predict the size of hailstone events prior to their occurence. The data was collected after the events, but the best model found (SVR) suggests that hailstone sizes could be predicted to within an accuracy of one-third of an inch, on average. Further study might involve more extensive model selection, the usage of Neural Networks for regression, hyperparameter optimization on whichever algorithms already produce the best results, or even development of a pipeline to automatically collect broader data (for example, if the data was converted to time-series by adding date as a variable, seasonal trends could contain information not available in this study). As it stands, the limited body of research in hailstone modeling seems ripe for improvement as Machine Learning algorithms undergo a Renaissance of development and improvement, but such advanced algorithms were deemed to be outside the purview or capacity of this study.
+
 \bigskip
 \bigskip
 \bigskip
@@ -211,7 +235,12 @@ Briefly explain the algorithms in this section, i.e., linear regressions. You ca
 
 \phantomsection
 \section*{Acknowledgments} % The \section*{} command stops section numbering
-
+Cody Kirkpatrick, Ph.D. \newline
+Hasan Kurban, Ph.D \newline
+Anand, A. (n.d.). Scikit-learn cheat sheet: Methods for classification \and; regression. Educative. Retrieved May 3, 2022, from \url{https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods} \newline
+Learn: Machine learning in python - scikit-learn 0.16.1 documentation. scikit. (n.d.). Retrieved May 3, 2022, from \url{https://scikit-learn.org/} \newline
+Megna, M. (2021, June 16). Hail Damage Home Insurance claims: What you need to know. Insurance.com. Retrieved May 3, 2022, from \url{https://www.insurance.com/coverage/home-hail-damage-insurance-claims#:~:text=hail\%5C\%20damage\%5C\%20insurance-,Average\%5C\%20insurance\%5C\%20payout\%5C\%20for\%5C\%20hail\%5C\%20damage,may\%5C\%20be\%5C\%20higher\%5C\%20or\%5C\%20lower\%22} \newline
+Schrater, P. (n.d.). Regression part II - vision labs. Regression II. Retrieved May 3, 2022, from \url{http://vision.psych.umn.edu/users/schrater/schrater_lab/courses/PattRecog09/RegressionII.pdf} \newline
 \addcontentsline{toc}{section}{Acknowledgments} % Adds this section to the table of contents
 
 
@@ -220,8 +249,8 @@ Briefly explain the algorithms in this section, i.e., linear regressions. You ca
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
 \phantomsection
-\bibliographystyle{unsrt}
-\bibliography{sample}
+\bibliographystyle{srt}
+
 
 %----------------------------------------------------------------------------------------
 
